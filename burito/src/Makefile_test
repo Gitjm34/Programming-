@@ -1,0 +1,30 @@
+
+APPS = main
+OBJS = App BaseBurito BuritoFactory
+OBJS += ComboDiscount Decorator Drink Fries
+OBJS += Jumbo Sausage SetDiscount Transaction
+OBJS += TransactionManager
+
+APPS_FILE = $(APPS:=.run)
+OBJS_FILE = $(OBJS:=.o)
+
+.SUFFIXES : .cpp .o .h .run
+
+.cpp.o :
+	g++ -c $<
+
+.cpp.run :
+	g++ -o $@ $< $(OBJS_FILE) -lpthread
+
+
+all : $(APPS_FILE)
+
+$(APPS_FILE) : $(OBJS_FILE)
+$(OBJS_FILE) : $(OBJS_FILE:.o=.h)
+
+
+clean :
+	rm -rf $(APPS_FILE)
+	rm -rf $(OBJS_FILE)
+
+# EOF
